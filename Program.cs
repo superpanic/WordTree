@@ -1,36 +1,79 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 
 namespace WordTree {
 	class Program {
+
+		static readonly string wordFile = @"words.txt";
+
 		static void Main(string[] args) {
 
+			long milliseconds;
+
+			bool isRoot = true;
+			WordNode rootNode = new WordNode(isRoot);
+
+			if (File.Exists(wordFile)) {
+				using (StreamReader file = new StreamReader(wordFile)) {
+					int counter = 0;
+					string ln;
+
+					milliseconds = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+
+					while ( (ln = file.ReadLine()) != null ) {
+						rootNode.AddWord( ln );
+						counter++;
+					}
+
+					milliseconds = (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - milliseconds;
+
+					file.Close();
+					Console.WriteLine($"Read {counter} words from text file in {milliseconds} milliseconds.");
+				}
+			}
+
 			List<string> wordList;
-			
 			wordList = new List<string> {
 				"banana",
 				"calming",
 				"astronomy",
 				"astrology",
+				"astrologx",
 				"bandana",
+				"bandanaz",
 				"calling",
 				"hidden",
+				"hxdden",
 				"asthma",
 				"astronaut",
+				"axtronaut",
 				"ape",
-				"monkey"
+				"coconut",
+				"police",
+				"baker",
+				"home",
+				"computercomputer",
+				"computer"
 			};
-			wordList.Sort();
+			
+			List<bool> foundWord;
+			foundWord = new List<bool>();
 
-			bool isRoot = true;
-			WordNode rootNode = new WordNode(isRoot);
+			milliseconds = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 			for (int i = 0; i < wordList.Count; i++) {
-				rootNode.AddWord(wordList[i]);
+				if (rootNode.ReadWord(wordList[i]) > 0) foundWord.Add(true);
+				else foundWord.Add(false);
+			}
+			milliseconds = (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond) - milliseconds;
+
+			Console.WriteLine($"Searched {wordList.Count} words in {milliseconds} milliseconds:");
+			Console.WriteLine("  {0,-20} {1,-10}", "WORD", "FOUND");
+			for (int i = 0; i < wordList.Count; i++) {
+				Console.WriteLine("  {0,-20} {1,-10}", wordList[i], foundWord[i]);
+//				Console.WriteLine($"{wordList[i]}........{foundWord[i]}");
 			}
 
-			SearchString(rootNode, "ape");
-			SearchString(rootNode, "banana");
-			SearchString(rootNode, "coconut");
 
 		}
 
@@ -45,3 +88,37 @@ namespace WordTree {
 
 	}
 }
+
+
+
+/*
+static void Main(string[] args) {
+
+	List<string> wordList;
+			
+	wordList = new List<string> {
+		"banana",
+		"calming",
+		"astronomy",
+		"astrology",
+		"bandana",
+		"calling",
+		"hidden",
+		"asthma",
+		"astronaut",
+		"ape"
+	};
+	wordList.Sort();
+
+	bool isRoot = true;
+	WordNode rootNode = new WordNode(isRoot);
+	for (int i = 0; i < wordList.Count; i++) {
+		rootNode.AddWord(wordList[i]);
+	}
+
+	SearchString(rootNode, "ape");
+	SearchString(rootNode, "banana");
+	SearchString(rootNode, "coconut");
+
+}
+*/

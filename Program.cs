@@ -54,7 +54,13 @@ namespace WordTree {
 				"baker",
 				"home",
 				"computercomputer",
-				"computer"
+				"computer",
+				"a",
+				"i",
+				"aha",
+				"haha",
+				"bah",
+				"baha"
 			};
 			
 			List<bool> foundWord;

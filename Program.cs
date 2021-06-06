@@ -24,7 +24,6 @@ namespace WordTree {
 
 			bool isRoot = true;
 			WordNode rootNode = new WordNode(isRoot);
-			
 			for (int i = 0; i < wordList.Count; i++) {
 				rootNode.AddWord(wordList[i]);
 			}

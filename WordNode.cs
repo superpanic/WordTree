@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WordWrap {
+namespace WordTree {
 	// a trie data structure for a large wordlist
 	// words need to be added in sorted order from a-z
 
